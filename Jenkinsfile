@@ -5,10 +5,10 @@ pipeline {
  }
  stages {
   stage("Checkout"){
-   agent none
+   agent any
    steps{
      snDevOpsStep()
-     snDevOpsChange()
+     //snDevOpsChange()
    }
   }
   stage("Tests") {
@@ -17,7 +17,8 @@ pipeline {
     snDevOpsStep()
     checkout scm
     sh 'mvn clean test'
-    step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+    junit '**/target/surefire-reports/*.xml'
+    //step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
    }
   }
   stage('Perf Tests'){
