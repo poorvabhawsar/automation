@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="CT3" verbose="1">
+	
+	
+	<test name="basic">
+	<groups> 
+		<run> 
+			<include name="regression"></include> 
+		</run> 
+	</groups> 
+		<packages>
+			<package name="com.slokam.automation.opencart.testscripts"></package>
+		</packages>
+	
+	</test>
+</suite>

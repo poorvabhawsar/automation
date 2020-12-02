@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="NaukriAutomation" parallel="methods" thread-count="4">
+
+	<test name="basic">
+		<packages>
+			<package name="com.slokam.automation.opencart.testscripts"></package>
+		</packages>
+	</test>
+	
+</suite>

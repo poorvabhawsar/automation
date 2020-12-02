@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Bharath" parallel="methods" thread-count="3">
+
+	<test name="basic">
+		<classes>
+			<class name="com.slokam.automation.opencart.testscripts.Sample1"></class>
+		</classes>
+	</test>
+</suite>

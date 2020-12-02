@@ -1,0 +1,28 @@
+
+ def mvn_version = 'Maven'
+ stage('Checkout') {
+     //snDevOpsStep()
+     //snDevOpsChange()
+     node {
+         echo 'Checking out..'
+         checkout scm
+     }
+ }
+ stage('Tests'){
+   //snDevOpsStep()
+   node {
+      withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+        sh 'mvn clean test'
+      }
+     step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+   }
+ }
+ stage('Perf Tests'){
+   //snDevOpsStep()
+   node {
+     sh '/usr/local/bin/bzt "load_test1.yml"'
+    //junit '**/junit1.xml'
+   }
+ }
+ 
+
