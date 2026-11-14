@@ -1,0 +1,28 @@
+name: skip-duration-test-extended
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo build
+
+  deploy:
+    needs: build
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo deploy
+
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo notify
+
+  cleanup:
+    needs: build
+    if: github.ref == 'refs/heads/does-not-exist'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo cleanup
