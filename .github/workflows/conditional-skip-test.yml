@@ -1,0 +1,13 @@
+name: conditional-skip-test
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo build
+  deploy:
+    needs: build
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo deploy
