@@ -11,3 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo deploy
+  post_skip:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo post_skip
