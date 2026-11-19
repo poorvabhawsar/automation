@@ -19,6 +19,16 @@ jobs:
             -f caller_run_id=${{ github.run_id }} \
             -f context="$CONTEXT"
         # CONTEXT is the caller's github context, as the customer passes it
+
+      # - name: Wait for registrar
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #   run: |
+      #     sleep 10
+      #     id=$(gh run list --workflow gate-registrar.yml --repo ${{ github.repository }} \
+      #          --json databaseId,displayTitle -q '.[] | select(.displayTitle=="register-${{ github.run_id }}") | .databaseId' | head -1)
+      #     gh run watch "$id" --repo ${{ github.repository }} --exit-status
+
     env:
       CONTEXT: ${{ toJSON(github) }}
 
