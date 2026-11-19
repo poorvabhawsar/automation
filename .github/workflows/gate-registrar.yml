@@ -1,0 +1,32 @@
+name: gate-registrar
+run-name: register-${{ inputs.caller_run_id }}
+on:
+  workflow_dispatch:
+    inputs:
+      caller_run_id:
+        required: true
+      context:
+        required: true
+
+jobs:
+  Servicenow_Change_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate the slow upstream jobs (customer's took about 2 min)
+        run: sleep 90
+
+      - name: Register deployment gate
+        uses: ServiceNow/servicenow-devops-change@v6.1.0
+        with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ inputs.context }}
+          job-name: 'approve-change-creation'
+          change-request: '{"autoCloseChange":true,"attributes":{"short_description":"Gate race repro"}}'
+          interval: '100'
+          timeout: '3600'
+          changeCreationTimeOut: '3600'
+          abortOnChangeCreationFailure: true
+          abortOnChangeStepTimeout: true
+          deployment-gate: '{"environment":"deployment_plan","jobName":"deploy"}'
