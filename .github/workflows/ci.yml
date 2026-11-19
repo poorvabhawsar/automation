@@ -1,0 +1,30 @@
+name: CI
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write   # lets GITHUB_TOKEN dispatch the registrar workflow
+
+jobs:
+  approve-change-creation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch gate registration (fire and forget)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run gate-registrar.yml \
+            --repo ${{ github.repository }} --ref main \
+            -f caller_run_id=${{ github.run_id }} \
+            -f context="$CONTEXT"
+        # CONTEXT is the caller's github context, as the customer passes it
+    env:
+      CONTEXT: ${{ toJSON(github) }}
+
+  deploy:
+    needs: approve-change-creation   # queues as soon as the dispatch step returns
+    runs-on: ubuntu-latest
+    environment: deployment_plan
+    steps:
+      - run: echo deployment completed
