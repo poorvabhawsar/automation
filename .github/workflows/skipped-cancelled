@@ -1,0 +1,7 @@
+name: skipped-cancelled
+
+on: [workflow_dispatch]
+jobs:
+  build:  { runs-on: ubuntu-latest, steps: [ { run: sleep 300 } ] }
+  test:   { needs: build, runs-on: ubuntu-latest, steps: [ { run: echo t } ] }
+  deploy: { needs: test,  runs-on: ubuntu-latest, steps: [ { run: echo d } ] }
