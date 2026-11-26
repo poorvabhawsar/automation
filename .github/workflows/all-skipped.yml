@@ -1,0 +1,6 @@
+name: all-skipped
+on: [workflow_dispatch]
+jobs:
+  build:  { if: "${{ false }}", runs-on: ubuntu-latest, steps: [ { run: echo b } ] }
+  test:   { needs: build,  runs-on: ubuntu-latest, steps: [ { run: echo t } ] }
+  deploy: { needs: test,   runs-on: ubuntu-latest, steps: [ { run: echo d } ] }
